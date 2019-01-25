@@ -7,6 +7,8 @@ verify_ssl = true
 
 [packages]
 django = "*"
+django-decouple = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.6"

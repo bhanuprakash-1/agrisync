@@ -201,4 +201,14 @@ script:
 
 ```
 
+### Add flake8
+
+```pipenv install flake8```
+In .flake8 file
+```
+[flake8]
+max-line-length = 120
+exclude = gymkhana/settings/*, manage.py, migrations
+```
+
 ### Setup REAME.md for your project
