@@ -6,7 +6,6 @@ A web application to guide farmers through different agriculture practices.
 This project includes:
 - A main `web portal` which can be updated dynamically through an admin interface.
 - A `forum/discussion` app for general purpose discussions.
-- An app called `Konnekt` to find/search people with a certain required skill set.
 
 ### Installation:
 Requirements:
