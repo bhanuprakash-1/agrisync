@@ -1,6 +1,6 @@
-##New Django Project Setup
+## New Django Project Setup
 
-###Set git repository first
+### Set git repository first
 
 ```git clone <repo link>```
 
@@ -12,7 +12,7 @@ or
 
 ```git brach --set-upstream-to=origin/master master```
 
-###Add .gitignore files
+### Add .gitignore files
 
 ```
 # Byte-compiled / optimized / DLL files
