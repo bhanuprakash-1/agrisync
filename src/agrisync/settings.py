@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'oauth.apps.OauthConfig',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
 
 MEDIA_URL = '/media/'
+
+# administration panel
+
+SITE_INDEX = 'AgriSync'
