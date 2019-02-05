@@ -16,10 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include
+from django.conf import settings
 
-admin.site.index_title = 'AgriSync Control Panel'
-admin.site.site_title = 'AgriSync'
-admin.site.site_header = 'AgriSync administration'
+admin.site.index_title = settings.INDEX_TITLE
+admin.site.site_title = settings.SITE_TITLE
+admin.site.site_header = settings.SITE_HEADER
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

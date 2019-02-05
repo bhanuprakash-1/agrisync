@@ -143,4 +143,6 @@ MEDIA_URL = '/media/'
 
 # administration panel
 
-SITE_INDEX = 'AgriSync'
+INDEX_TITLE = 'AgriSync Control Panel'
+SITE_TITLE = 'AgriSync'
+SITE_HEADER = 'AgriSync administration'
