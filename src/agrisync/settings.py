@@ -146,3 +146,8 @@ MEDIA_URL = '/media/'
 INDEX_TITLE = 'AgriSync Control Panel'
 SITE_TITLE = 'AgriSync'
 SITE_HEADER = 'AgriSync administration'
+
+# JSON Settings
+
+JSON_SETTINGS_FILE = os.path.join(BASE_DIR, '../settings.json')
+DEFAULT_JSON_SETTINGS_FILE = os.path.join(BASE_DIR, '../default_settings.json')

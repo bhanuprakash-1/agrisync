@@ -1,0 +1,12 @@
+{% extends 'admin/base_site.html' %}
+{% load staticfiles %}
+{% block content %}
+    elf
+    {{ has_permission }}
+    <form action="/admin/settings/change_done">
+        <input type="checkbox" name="DEBUG" value="{{ DEBUG }}"> DEBUG <br>
+        <input type="checkbox" name="MAINTENANCE_MODE" value="{{ MAINTENANCE_MODE }}">MAINTENANCE_MODE <br>
+        <br><br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
