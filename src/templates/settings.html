@@ -1,12 +1,17 @@
 {% extends 'admin/base_site.html' %}
 {% load staticfiles %}
 {% block content %}
-    elf
-    {{ has_permission }}
-    <form action="/admin/settings/change_done">
-        <input type="checkbox" name="DEBUG" value="{{ DEBUG }}"> DEBUG <br>
-        <input type="checkbox" name="MAINTENANCE_MODE" value="{{ MAINTENANCE_MODE }}">MAINTENANCE_MODE <br>
-        <br><br>
+    <form action="{% url 'settings:settings_change_done' %}" method="post">
+        {% csrf_token %}
+        <table>
+            {% for key, value in fields.items %}
+                <tr>
+                <td>{{ key }}</td>
+                <td>{{ value|safe }}</td>
+                </tr>
+            {% endfor %}
+        </table>
         <input type="submit" value="Submit">
     </form>
+    <a href="{% url 'settings:settings_reset' %}">Reset</a>
 {% endblock %}

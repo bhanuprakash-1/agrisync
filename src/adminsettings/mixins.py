@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
 from django.contrib.admin import AdminSite
+from .settings import allsettings
 
 
 class RedirectMixin(RedirectView):
@@ -25,7 +26,8 @@ class SettingsMixin(TemplateView, RedirectMixin):
     site_url = AdminSite.site_url
     template_name = 'settings.html'
 
-    def has_permission(self, request):
+    @staticmethod
+    def has_permission(request):
         """
         check whether user is superuser or not
         """
@@ -39,6 +41,7 @@ class SettingsMixin(TemplateView, RedirectMixin):
         context['site_title'] = settings.SITE_TITLE
         context['site_header'] = settings.SITE_HEADER
         context['title'] = 'Change settings'
+        context['fields'] = allsettings.html_settings()
         return context
 
     def get(self, request, *args, **kwargs):
