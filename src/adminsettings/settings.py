@@ -75,6 +75,7 @@ class Settings(object):
 
     DEBUG = BooleanSettingsField('DEBUG')
     MAINTENANCE_MODE = BooleanSettingsField('MAINTENANCE_MODE')
+    LOGIN_REDIRECT_URL = SettingField('LOGIN_REDIRECT_URL')
 
     @staticmethod
     def __init__():

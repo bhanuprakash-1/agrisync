@@ -22,9 +22,9 @@ class AdminSettings(AdminSite):
             return update_wrapper(wrapper, view)
 
         urlpatterns = [
-            path('change', wrap(self.settings_change), name='settings_change'),
-            path('change_done', wrap(self.settings_change_done), name='settings_change_done'),
-            path('reset', wrap(self.settings_reset), name='settings_reset'),
+            path('change/', wrap(self.settings_change), name='settings_change'),
+            path('change_done/', wrap(self.settings_change_done), name='settings_change_done'),
+            path('reset/', wrap(self.settings_reset), name='settings_reset'),
         ]
         return urlpatterns
 

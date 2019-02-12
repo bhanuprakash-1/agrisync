@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import include
 from django.conf import settings
 from adminsettings.admin import adminsettings
@@ -25,9 +26,14 @@ admin.site.site_title = settings.SITE_TITLE
 admin.site.site_header = settings.SITE_HEADER
 
 urlpatterns = [
+    url(r'^login/$', LoginView.as_view(template_name='forum/login.html',
+                                       redirect_authenticated_user=True), name='login'),
+    url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^admin/settings/', adminsettings.urls),
-    url(r'^', include('oauth.urls', namespace='home'))
+    url(r'^account/', include('oauth.urls', namespace='account')),
+    url(r'^forum/', include('forum.urls', namespace='forum')),
+    url(r'^', include('main.urls', namespace='main')),
 ]
 
 if settings.DEBUG:
