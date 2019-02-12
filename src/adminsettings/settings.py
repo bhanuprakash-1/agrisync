@@ -102,7 +102,10 @@ class Settings(object):
         """
         data = BaseJson.get_settings()
         for setting in data:
-            getattr(Settings, setting).set_value(data[setting])
+            try:
+                getattr(Settings, setting).set_value(data[setting])
+            except AttributeError:
+                pass
 
     @staticmethod
     def html_settings():
@@ -140,7 +143,7 @@ class Settings(object):
                 try:
                     getattr(Settings, setting).set_value(data[setting])
                 except MultiValueDictKeyError:
-                    getattr(Settings,setting).set_value(None)
+                    getattr(Settings, setting).set_value(None)
         Settings.save_settings()
 
     @staticmethod
