@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'agrisync.middleware.MaintenanceMiddleware',
 ]
 
 ROOT_URLCONF = 'agrisync.urls'
