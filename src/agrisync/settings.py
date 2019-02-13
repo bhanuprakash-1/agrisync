@@ -26,7 +26,11 @@ SECRET_KEY = config('SECRET_KEY', cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Maintenance settings
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+MAIN_APP_MAINTENANCE = config('MAIN_APP_MAINTENANCE', default=False, cast=bool)
+OAUTH_APP_MAINTENANCE = config('OAUTH_APP_MAINTENANCE', default=False, cast=bool)
+FORUM_APP_MAINTENANCE = config('FORUM_APP_MAINTENANCE', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 

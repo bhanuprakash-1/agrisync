@@ -75,6 +75,9 @@ class Settings(object):
 
     DEBUG = BooleanSettingsField('DEBUG')
     MAINTENANCE_MODE = BooleanSettingsField('MAINTENANCE_MODE')
+    MAIN_APP_MAINTENANCE = BooleanSettingsField('MAIN_APP_MAINTENANCE')
+    OAUTH_APP_MAINTENANCE = BooleanSettingsField('OAUTH_APP_MAINTENANCE')
+    FORUM_APP_MAINTENANCE = BooleanSettingsField('FORUM_APP_MAINTENANCE')
     LOGIN_REDIRECT_URL = SettingField('LOGIN_REDIRECT_URL')
 
     @staticmethod
