@@ -35,9 +35,9 @@ urlpatterns = [
     url(r'^favicon.ico$', favicon_view),
     url(r'^admin/', admin.site.urls),
     url(r'^admin/settings/', adminsettings.urls),
-    url(r'^account/', include('oauth.urls', namespace='account')),
-    url(r'^forum/', include('forum.urls', namespace='forum')),
-    url(r'^', include('main.urls', namespace='main')),
+    url(r'^account/', include('oauth.urls', namespace='account'), kwargs={'MAINTENANCE': 'OAUTH_APP_MAINTENANCE'}),
+    url(r'^forum/', include('forum.urls', namespace='forum'), kwargs={'MAINTENANCE': 'FORUM_APP_MAINTENANCE'}),
+    url(r'^', include('main.urls', namespace='main'), kwargs={'MAINTENANCE': 'MAIN_APP_MAINTENANCE'}),
 ]
 
 if settings.DEBUG:

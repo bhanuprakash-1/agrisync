@@ -28,6 +28,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Maintenance settings
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+MAINTENANCE_MODE_APP = ('main', 'forum', 'oauth')
 MAIN_APP_MAINTENANCE = config('MAIN_APP_MAINTENANCE', default=False, cast=bool)
 OAUTH_APP_MAINTENANCE = config('OAUTH_APP_MAINTENANCE', default=False, cast=bool)
 FORUM_APP_MAINTENANCE = config('FORUM_APP_MAINTENANCE', default=False, cast=bool)
