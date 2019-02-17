@@ -23,7 +23,6 @@ class MaintenanceMiddleware(MiddlewareMixin):
         try:
             self.maintenance_mode = resolve(request.path).kwargs['MAINTENANCE']
         except KeyError:
-            print('this is executed hi')
             self.maintenance_mode = resolve(request.path).app_name.upper() + "_APP_MAINTENANCE"
 
         if hasattr(settings, self.maintenance_mode) and getattr(settings, self.maintenance_mode):

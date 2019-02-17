@@ -8,13 +8,18 @@ class SettingField:
     Base settings field
     """
     name = None
+    verbous_name = None
     level_of_json = 1
 
-    def __init__(self, setting_name):
+    def __init__(self, setting_name, **options):
         """
         Initialize object with some value
         """
         self.name = setting_name
+        if 'verbous_name' in options:
+            self.verbous_name = options['verbous_name']
+        else:
+            self.verbous_name = setting_name
 
     def get_value(self):
         """
@@ -73,12 +78,11 @@ class Settings(object):
     Make sure settings is in upper case
     """
 
-    DEBUG = BooleanSettingsField('DEBUG')
-    MAINTENANCE_MODE = BooleanSettingsField('MAINTENANCE_MODE')
-    MAIN_APP_MAINTENANCE = BooleanSettingsField('MAIN_APP_MAINTENANCE')
-    OAUTH_APP_MAINTENANCE = BooleanSettingsField('OAUTH_APP_MAINTENANCE')
-    FORUM_APP_MAINTENANCE = BooleanSettingsField('FORUM_APP_MAINTENANCE')
-    LOGIN_REDIRECT_URL = SettingField('LOGIN_REDIRECT_URL')
+    DEBUG = BooleanSettingsField('DEBUG', verbous_name='Debug')
+    MAINTENANCE_MODE = BooleanSettingsField('MAINTENANCE_MODE',  verbous_name='Maintenance Mode')
+    MAIN_APP_MAINTENANCE = BooleanSettingsField('MAIN_APP_MAINTENANCE',  verbous_name='Main app maintenance')
+    OAUTH_APP_MAINTENANCE = BooleanSettingsField('OAUTH_APP_MAINTENANCE', verbous_name='Oauth app maintenance')
+    FORUM_APP_MAINTENANCE = BooleanSettingsField('FORUM_APP_MAINTENANCE', verbous_name='Forum app maintenance')
 
     @staticmethod
     def __init__():
@@ -116,7 +120,7 @@ class Settings(object):
         html = {}
         for setting in dir(Settings):
             if not setting.__contains__('__') and setting.isupper():
-                html[setting] = getattr(Settings, setting).html()
+                html[getattr(Settings, setting).verbous_name] = getattr(Settings, setting).html()
         return html
 
     @staticmethod
