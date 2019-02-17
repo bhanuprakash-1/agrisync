@@ -26,7 +26,12 @@ SECRET_KEY = config('SECRET_KEY', cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Maintenance settings
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+MAINTENANCE_MODE_APP = ('main', 'forum', 'oauth')
+MAIN_APP_MAINTENANCE = config('MAIN_APP_MAINTENANCE', default=False, cast=bool)
+OAUTH_APP_MAINTENANCE = config('OAUTH_APP_MAINTENANCE', default=False, cast=bool)
+FORUM_APP_MAINTENANCE = config('FORUM_APP_MAINTENANCE', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'oauth.apps.OauthConfig',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'agrisync.middleware.MaintenanceMiddleware',
 ]
 
 ROOT_URLCONF = 'agrisync.urls'
@@ -130,12 +137,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
-STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='static', cast=str))
+STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfiles', cast=str))
 
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
 
 MEDIA_URL = '/media/'
+
+# administration panel
+
+INDEX_TITLE = 'AgriSync Control Panel'
+SITE_TITLE = 'AgriSync'
+SITE_HEADER = 'AgriSync administration'
+
+# JSON Settings
+
+JSON_SETTINGS_FILE = os.path.join(BASE_DIR, '../settings.json')
+DEFAULT_JSON_SETTINGS_FILE = os.path.join(BASE_DIR, '../default_settings.json')
+
+# login redirect url
+
+LOGIN_REDIRECT_URL = '/'

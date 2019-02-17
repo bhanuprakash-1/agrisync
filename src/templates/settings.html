@@ -1,0 +1,17 @@
+{% extends 'admin/base_site.html' %}
+{% load staticfiles %}
+{% block content %}
+    <form action="{% url 'settings:settings_change_done' %}" method="post">
+        {% csrf_token %}
+        <table>
+            {% for key, value in fields.items %}
+                <tr>
+                <td>{{ key }}</td>
+                <td>{{ value|safe }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="{% url 'settings:settings_reset' %}">Reset</a>
+{% endblock %}
