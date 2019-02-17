@@ -1,2 +1,8 @@
-<title>Maintenance</title>
-<h1>{{ message }}</h1>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Under Maintenance !{% endblock %}
+{% block main %}
+    <div class="container">
+        <h1 class="h1-responsive">{{ message }}</h1>
+    </div>
+{% endblock %}

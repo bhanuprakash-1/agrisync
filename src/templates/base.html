@@ -1,1 +1,30 @@
-<h1>This is base page for error and maintenance</h1>
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block metatags %}
+        <meta charset="UTF-8">
+    {% endblock %}
+    {% block extrametatags %}{% endblock %}
+    {% block styles %}
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    {% endblock %}
+    {% block extrastyles %}{% endblock %}
+    <title>{% block title %}Agrisync{% endblock %}</title>
+</head>
+<body>
+{% block navbar %}{% endblock %}
+{% block fullpage %}{% endblock %}
+{% block content %}
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+{% endblock %}
+{% block extrascripts %}
+{% endblock %}
+</body>
+</html>
