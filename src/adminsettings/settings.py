@@ -1,70 +1,6 @@
-from django.conf import global_settings, settings
+from .fields import BooleanSettingsField
 from django.utils.datastructures import MultiValueDictKeyError
 from .json import BaseJson
-
-
-class SettingField:
-    """
-    Base settings field
-    """
-    name = None
-    level_of_json = 1
-
-    def __init__(self, setting_name):
-        """
-        Initialize object with some value
-        """
-        self.name = setting_name
-
-    def get_value(self):
-        """
-        Get value of self.name settings
-        """
-        if self.name.isupper():
-            if hasattr(settings, self.name):
-                return getattr(settings, self.name)
-            elif hasattr(global_settings, self.name):
-                return getattr(global_settings, self.name)
-            else:
-                raise KeyError("Settings %s not found" % self.name)
-        else:
-            raise IndentationError("Settings %s is not in UPPER case" % self.name)
-
-    def set_value(self, value):
-        """
-        Set value of self.name settings with value
-        """
-        if hasattr(settings, self.name):
-            return setattr(settings, self.name, value)
-        elif hasattr(global_settings, self.name):
-            return setattr(global_settings, self.name, value)
-        else:
-            raise KeyError("Settings %s not found" % self.name)
-
-    def html(self):
-        """
-        html code for settings
-        """
-        return "<input type='text' name='" + self.name + "' value='" + str(self.get_value()) + "'>"
-
-
-class BooleanSettingsField(SettingField):
-    """
-    Class for boolean settings
-    """
-    def set_value(self, value):
-        if value is None:
-            return super(BooleanSettingsField, self).set_value(False)
-        elif value == 'on':
-            return super(BooleanSettingsField, self).set_value(True)
-        else:
-            return super(BooleanSettingsField, self).set_value(value)
-
-    def html(self):
-        checked = ""
-        if self.get_value():
-            checked = "checked"
-        return "<input type='checkbox' name='" + self.name + "'" + checked + ">"
 
 
 class Settings(object):
@@ -73,12 +9,11 @@ class Settings(object):
     Make sure settings is in upper case
     """
 
-    DEBUG = BooleanSettingsField('DEBUG')
-    MAINTENANCE_MODE = BooleanSettingsField('MAINTENANCE_MODE')
-    MAIN_APP_MAINTENANCE = BooleanSettingsField('MAIN_APP_MAINTENANCE')
-    OAUTH_APP_MAINTENANCE = BooleanSettingsField('OAUTH_APP_MAINTENANCE')
-    FORUM_APP_MAINTENANCE = BooleanSettingsField('FORUM_APP_MAINTENANCE')
-    LOGIN_REDIRECT_URL = SettingField('LOGIN_REDIRECT_URL')
+    DEBUG = BooleanSettingsField('DEBUG', verbous_name='Debug')
+    MAINTENANCE_MODE = BooleanSettingsField('MAINTENANCE_MODE',  verbous_name='Maintenance Mode')
+    MAIN_APP_MAINTENANCE = BooleanSettingsField('MAIN_APP_MAINTENANCE',  verbous_name='Main app maintenance')
+    OAUTH_APP_MAINTENANCE = BooleanSettingsField('OAUTH_APP_MAINTENANCE', verbous_name='Oauth app maintenance')
+    FORUM_APP_MAINTENANCE = BooleanSettingsField('FORUM_APP_MAINTENANCE', verbous_name='Forum app maintenance')
 
     @staticmethod
     def __init__():
@@ -116,7 +51,7 @@ class Settings(object):
         html = {}
         for setting in dir(Settings):
             if not setting.__contains__('__') and setting.isupper():
-                html[setting] = getattr(Settings, setting).html()
+                html[getattr(Settings, setting).verbous_name] = getattr(Settings, setting).html()
         return html
 
     @staticmethod
