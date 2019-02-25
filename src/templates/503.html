@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}Under Maintenance !{% endblock %}
-{% block main %}
-    <div class="container">
-        <h1 class="h1-responsive">{{ message }}</h1>
+{% block customstyles %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+        .main-container {
+            height: 100vh;
+            display: table;
+            padding-top: 5rem;
+        }
+
+        .main-content {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+{% block fullpagecontent %}
+    <div class="container main-container">
+        <div class="main-content">
+            <img src="{% static 'assets/settings-gear.png' %}" alt="Settings Gear Icon">
+            <h1 class="h1-responsive" style="font-family: 'Montserrat', sans-serif;">{{ message }}</h1>
+        </div>
     </div>
 {% endblock %}

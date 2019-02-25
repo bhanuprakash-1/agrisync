@@ -1,1 +1,12 @@
-<h1>This is 400 bad request</h1>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Bad Request !{% endblock %}
+{% block customstyles %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+{% endblock %}
+{% block header %}{% endblock %}
+{% block fullpagecontent %}
+    <h1 style="font-family: 'Montserrat', sans-serif; text-align: center">Bad Request !</h1>
+    <h2 style="font-family: 'Montserrat', sans-serif; text-align: center">Please contact admin</h2>
+{% endblock %}
+{% block footer %}{% endblock %}
