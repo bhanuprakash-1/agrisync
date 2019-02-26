@@ -1,8 +1,13 @@
 from django.conf.urls import url
-from .views import HomeView
+from django.urls import path
+
+from . import views
 
 app_name = 'oauth'
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name='index')
+
+    path('', views.index, name='index')
+
+
 ]
