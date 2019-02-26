@@ -8,7 +8,10 @@ class BaseJson:
         """
         get all changed settings
         """
-        file_name = getattr(settings, 'JSON_SETTINGS_FILE')
+        try:
+            file_name = settings.JSON_SETTINGS_MODULE
+        except AttributeError:
+            file_name = 'settings.json'
         data = {}
         try:
             with open(file_name, 'r') as infile:
@@ -24,7 +27,10 @@ class BaseJson:
         """
         set all settings from data object to json file
         """
-        file_name = getattr(settings, 'JSON_SETTINGS_FILE')
+        try:
+            file_name = getattr(settings, 'JSON_SETTINGS_FILE')
+        except AttributeError:
+            file_name = 'settings.json'
         with open(file_name, 'w') as outfile:
             json.dump(data, outfile)
 
@@ -33,16 +39,28 @@ class BaseJson:
         """
         get all default settings and save in data object
         """
-        file_name = getattr(settings, 'DEFAULT_JSON_SETTINGS_FILE')
-        with open(file_name, 'r') as infile:
-            data = json.load(infile)
-        return data
+        try:
+            file_name = getattr(settings, 'DEFAULT_JSON_SETTINGS_FILE')
+        except AttributeError:
+            file_name = 'default_settings.json'
+
+        try:
+            with open(file_name, 'r') as infile:
+                data = json.load(infile)
+            return data
+        except FileNotFoundError:
+            from .utils import save_default, get_default
+            save_default()
+            return get_default()
 
     @staticmethod
     def set_default(data):
         """
         save default setting to json file
         """
-        file_name = getattr(settings, 'DEFAULT_JSON_SETTINGS_FILE')
+        try:
+            file_name = getattr(settings, 'DEFAULT_JSON_SETTINGS_FILE')
+        except AttributeError:
+            file_name = 'default_settings.json'
         with open(file_name, 'w') as outfile:
             json.dump(data, outfile)

@@ -145,7 +145,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfil
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
+MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../../media', cast=str))
 
 MEDIA_URL = '/media/'
 
