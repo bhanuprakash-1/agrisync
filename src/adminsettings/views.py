@@ -1,5 +1,6 @@
-from .mixins import SettingsMixin
+from .mixins import SettingsMixin, RedirectMixin
 from .settings import allsettings
+from django.contrib import messages
 
 
 class SettingsChangeView(SettingsMixin):
@@ -15,7 +16,8 @@ class SettingsChangeDoneView(SettingsMixin):
     """
     def get(self, request, *args, **kwargs):
         allsettings.set_settings(request.POST)
-        return super(SettingsChangeDoneView, self).get(request, *args, **kwargs)
+        messages.success(request, "Settings changed successfully ...")
+        return RedirectMixin.as_view(redirect_url='settings:settings_change')(request)
 
 
 class SettingsResetView(SettingsMixin):
@@ -25,4 +27,5 @@ class SettingsResetView(SettingsMixin):
     def get(self, request, *args, **kwargs):
         allsettings.set_default()
         allsettings.set_settings(allsettings.get_settings())
-        return super(SettingsResetView, self).get(request, *args, **kwargs)
+        messages.success(request, "Settings reset successfully ...")
+        return RedirectMixin.as_view(redirect_url='settings:settings_change')(request)

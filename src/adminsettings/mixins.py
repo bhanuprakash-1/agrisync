@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
 from django.contrib.admin import AdminSite
 from .settings import allsettings
+from django.contrib import messages
 
 
 class RedirectMixin(RedirectView):
@@ -56,4 +57,5 @@ class SettingsMixin(TemplateView, RedirectMixin):
         if self.has_permission(request):
             return self.render_to_response(context)
         else:
+            messages.error(request, "Only super user can change settings...")
             return RedirectMixin.as_view()(request)
