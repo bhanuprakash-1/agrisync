@@ -1,10 +1,12 @@
 from django.contrib import admin
-from oauth.models import Farmer
+from .models import Farmer, Expert
 
 
-class FarmerAdmin(admin.ModelAdmin):
-    model = Farmer
-    list_display = ('__str__', )
+class something(admin.ModelAdmin):
+    fieldsets = [
+        ('Name', {'fields': ['first_name', 'last_name']}),
+    ]
 
 
-admin.site.register(Farmer, FarmerAdmin)
+admin.site.register(Expert)
+admin.site.register(Farmer, something)

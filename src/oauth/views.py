@@ -1,5 +1,5 @@
-from django.views.generic import TemplateView
+from django.shortcuts import render, get_object_or_404
 
 
-class HomeView(TemplateView):
-    template_name = 'oauth/index.html'
+def index(request):
+    return render(request, 'oauth/index.html')
