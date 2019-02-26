@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
 from django.contrib.admin import AdminSite
-from .settings import allsettings
+from .utils import html_settings
 from django.contrib import messages
 
 
@@ -42,7 +42,7 @@ class SettingsMixin(TemplateView, RedirectMixin):
         context['site_title'] = settings.SITE_TITLE
         context['site_header'] = settings.SITE_HEADER
         context['title'] = 'Change settings'
-        context['fields'] = allsettings.html_settings()
+        context['fields'] = html_settings()
         return context
 
     def get(self, request, *args, **kwargs):
