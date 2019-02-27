@@ -67,4 +67,4 @@ class BooleanSettingsField(SettingField):
         checked = ""
         if self.get_value():
             checked = "checked"
-        return "<input type='checkbox' name='" + self.name + "'" + checked + ">"
+        return "<input type='checkbox' name='" + self.name + "' " + checked + ">"
