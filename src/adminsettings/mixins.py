@@ -2,7 +2,8 @@ from django.urls import reverse
 from django.views.generic import TemplateView, RedirectView
 from django.conf import settings
 from django.contrib.admin import AdminSite
-from .utils import html_settings
+from adminsettings.utils import html_settings
+from adminsettings.tokens import settings_change_token
 from django.contrib import messages
 
 
@@ -54,6 +55,7 @@ class SettingsMixin(TemplateView, RedirectMixin):
         context = self.get_context_data(**kwargs)
         context['site_url'] = site_url
         context['has_permission'] = self.has_permission(request)
+        context['hash'] = settings_change_token.make_token(request.user)
         if self.has_permission(request):
             return self.render_to_response(context)
         else:
