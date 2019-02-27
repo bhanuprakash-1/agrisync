@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'versatileimagefield',
     'oauth.apps.OauthConfig',
     'main.apps.MainConfig',
+
 ]
 
 MIDDLEWARE = [

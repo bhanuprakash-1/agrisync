@@ -1,5 +1,5 @@
 from django.db import models
-from src.oauth.models import Farmer
+from oauth.models import Farmer
 
 
 class FarmerDetails(models.Model):
@@ -25,10 +25,10 @@ class FarmerDetails(models.Model):
     """
     Various Model Fields
     """
-    farmer = models.ForeignKey(Farmer, on_delete= models.CASCADE)
-    soil = models.CharField(choices=soil_type, blank=False)
-    primary_crop = models.CharField(choices=primary_crop, blank=False)
-    secondary_crop = models.CharField(blank=True)
+    farmer = models.OneToOneField(Farmer, on_delete=models.CASCADE)
+    soil = models.CharField(max_length=1, choices=soil_type, blank=False, default=1)
+    primary_crop = models.CharField(max_length=1, choices=primary_crop, blank=False, default=1)
+    secondary_crop = models.CharField(max_length=40, blank=True)
 
     def __str__(self):
-        return self.farmer.first_name
+        return self.farmer
