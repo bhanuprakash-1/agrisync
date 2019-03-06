@@ -1,27 +1,10 @@
-from django.urls import reverse
-from django.views.generic import TemplateView, RedirectView
+from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib.admin import AdminSite
 from adminsettings.utils import html_settings
-from adminsettings.tokens import settings_change_token
-from django.contrib import messages
 
 
-class RedirectMixin(RedirectView):
-    """
-    If user is not authorised then redirect home page
-    """
-    redirect_url = 'admin:index'
-    urlconf = None
-    args = None
-    kwargs = None
-    current_app = None
-
-    def get_redirect_url(self, *args, **kwargs):
-        return reverse(self.redirect_url, self.urlconf, self.args, self.kwargs, self.current_app)
-
-
-class SettingsMixin(TemplateView, RedirectMixin):
+class SettingsMixin(TemplateView):
     """
     A separate mixin for handling context and user validation for settings site only
     """
@@ -45,19 +28,3 @@ class SettingsMixin(TemplateView, RedirectMixin):
         context['title'] = 'Change settings'
         context['fields'] = html_settings()
         return context
-
-    def get(self, request, *args, **kwargs):
-        """
-        Update get method for request based context
-        """
-        script_name = request.META['SCRIPT_NAME']
-        site_url = script_name if self.site_url == '/' and script_name else self.site_url
-        context = self.get_context_data(**kwargs)
-        context['site_url'] = site_url
-        context['has_permission'] = self.has_permission(request)
-        context['hash'] = settings_change_token.make_token(request.user)
-        if self.has_permission(request):
-            return self.render_to_response(context)
-        else:
-            messages.error(request, "Only super user can change settings...")
-            return RedirectMixin.as_view()(request)
