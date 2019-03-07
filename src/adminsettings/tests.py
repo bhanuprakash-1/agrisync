@@ -89,7 +89,7 @@ class AdminSettingsTestCase(TestCase):
             self.assertEqual(message.message, RESET_MESSAGE)
         self.assertRedirects(response, reverse('settings:settings_change'))
         # settings change done url
-        context = {'hash': hash_value, 'DEBUG': 'on'}
+        context = {'hash': hash_value, 'MAINTENANCE_MODE': 'on'}
         response = self.super_user.post(reverse('settings:settings_change_done'), context, follow=True)
         for message in response.context['messages']:
             self.assertEqual(message.message, SUCCESS_MESSAGE)
