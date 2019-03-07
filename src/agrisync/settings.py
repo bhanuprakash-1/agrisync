@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'agrisync.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if config('SQLITE_DB', cast=bool, default=False):
+if config('SQLITE_DB', cast=bool, default=False):  # pragma: no cover
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
