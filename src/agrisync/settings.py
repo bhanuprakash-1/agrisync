@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'oauth.apps.OauthConfig',
+    'forum.apps.ForumConfig',
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -89,7 +91,7 @@ if config('SQLITE_DB', cast=bool, default=False):
             'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
         }
     }
-else:
+else:  # pragma: no cover
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
