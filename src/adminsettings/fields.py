@@ -26,7 +26,7 @@ class SettingField:
         if self.name.isupper():
             if hasattr(settings, self.name):
                 return getattr(settings, self.name)
-            elif hasattr(global_settings, self.name):
+            elif hasattr(global_settings, self.name):  # pragma: no cover
                 return getattr(global_settings, self.name)
             else:
                 raise KeyError("Settings %s not found" % self.name)
@@ -39,7 +39,7 @@ class SettingField:
         """
         if hasattr(settings, self.name):
             return setattr(settings, self.name, value)
-        elif hasattr(global_settings, self.name):
+        elif hasattr(global_settings, self.name):  # pragma: no cover
             return setattr(global_settings, self.name, value)
         else:
             raise KeyError("Settings %s not found" % self.name)

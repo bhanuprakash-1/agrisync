@@ -9,9 +9,9 @@ class BaseJson:
         get all changed settings
         """
         try:
-            file_name = settings.JSON_SETTINGS_MODULE
+            file_name = settings.JSON_SETTINGS_FILE
         except AttributeError:
-            file_name = 'settings.json'
+            file_name = '../settings.json'
         data = {}
         try:
             with open(file_name, 'r') as infile:
@@ -30,7 +30,7 @@ class BaseJson:
         try:
             file_name = getattr(settings, 'JSON_SETTINGS_FILE')
         except AttributeError:
-            file_name = 'settings.json'
+            file_name = '../settings.json'
         with open(file_name, 'w') as outfile:
             json.dump(data, outfile)
 
@@ -42,7 +42,7 @@ class BaseJson:
         try:
             file_name = getattr(settings, 'DEFAULT_JSON_SETTINGS_FILE')
         except AttributeError:
-            file_name = 'default_settings.json'
+            file_name = '../default_settings.json'
 
         try:
             with open(file_name, 'r') as infile:
@@ -61,6 +61,6 @@ class BaseJson:
         try:
             file_name = getattr(settings, 'DEFAULT_JSON_SETTINGS_FILE')
         except AttributeError:
-            file_name = 'default_settings.json'
+            file_name = '../default_settings.json'
         with open(file_name, 'w') as outfile:
             json.dump(data, outfile)

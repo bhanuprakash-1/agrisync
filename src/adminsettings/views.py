@@ -36,6 +36,10 @@ class SettingsChangeDoneView(SettingsMixin):
     change settings and redirect to change settings
     """
     def get(self, request, *args, **kwargs):
+        messages.error(request, TOKEN_NOT_FOUND)
+        return RedirectView.as_view(pattern_name='settings:settings_change')(request)
+
+    def post(self, request):
         if self.has_permission(request):
             try:
                 if request.POST['hash'] == settings_change_token.make_token(request.user):
