@@ -20,9 +20,9 @@ def load_settings():
     """
     data = BaseJson.get_settings()
     for setting in data:
-        try:
+        try:  # pragma: no cover
             getattr(Settings, setting).set_value(data[setting])
-        except AttributeError:
+        except AttributeError:  # pragma: no cover
             pass
 
 
