@@ -5,6 +5,12 @@ from django.core.validators import RegexValidator, MaxValueValidator, MinValueVa
 
 
 class Farmer(models.Model):
+    Income_choices = (
+        ('1', 'Below 1 Lac'),
+        ('2', 'Between 1 to 3 Lacs'),
+        ('3', 'Above 3 Lacs'),
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255, blank=True)
     phone = models.CharField(max_length=15, blank=True)
@@ -18,7 +24,7 @@ class Farmer(models.Model):
     registration_date = models.DateTimeField(auto_now_add=True)
     state = models.CharField(max_length=225, blank=True)
     district = models.CharField(max_length=225, blank=True)
-    income = models.SmallIntegerField(default=0, blank=True)
+    income = models.CharField(max_length=30,default='', blank=True,choices=Income_choices)
     major_crop = models.CharField(max_length=225, blank=True)
 
     """  Add location of land ....  """
@@ -28,6 +34,9 @@ class Farmer(models.Model):
 
 
 class Expert(models.Model):
+
+
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255, blank=True)
     phone = models.CharField(max_length=15, blank=True)
