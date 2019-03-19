@@ -1,2 +1,8 @@
-<h1>This is home page of oauth</h1>
+<h1>This is index page of oauth</h1>
 
+{%  if request.user.is_authenticated  %}
+    {{  user.full_name }}
+ <p> is authenticated !!!!!</p>
+{% else   %}
+    <p> you are not authenticated </p>
+{% endif %}

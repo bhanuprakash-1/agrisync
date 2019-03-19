@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+   <a  href="/oauth/Farmer_Signup/"> To signup click</a>
+{%  if request.user.is_authenticated  %}
+    {{  user.full_name }}
+ <p> is authenticated !!!!!</p>
+{% else   %}
+    <p> you are not authenticated </p>
+{% endif %}
+
+</body>
+</html>
