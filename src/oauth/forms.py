@@ -5,6 +5,7 @@ from django.contrib.auth import password_validation
 from .models import Farmer
 from django.contrib.auth import authenticate
 
+
 class FarmerRegisterForm(UserCreationForm):
     password1 = forms.CharField(label='Password',
                                 strip=False,
@@ -22,7 +23,7 @@ class FarmerRegisterForm(UserCreationForm):
     dob = forms.DateField(help_text="Enter your DOB ex: 2000-01-25", required=False)
     aadhar = forms.IntegerField(help_text="Enter your Aadhar Number", required=False)
     land_area = forms.FloatField(help_text="Enter your Land area in acres")
-    income = forms.ChoiceField(help_text="Enter your annual Income in Lacs",choices=Farmer.Income_choices)
+    income = forms.ChoiceField(help_text="Enter your annual Income in Lacs", choices=Farmer.Income_choices)
     major_crop = forms.CharField(max_length=220, help_text="Enter your major crop", required=False)
     img_file = forms.ImageField(required=False)
     state = forms.CharField(max_length=35, required=False)
@@ -76,13 +77,13 @@ class LoginForm(forms.Form):
                                )
 
     def clean(self):
-        super(LoginForm,self).clean()
-        username = self.cleaned_data.get('username','')
+        super(LoginForm, self).clean()
+        username = self.cleaned_data.get('username', '')
         password = self.cleaned_data.get('password', '')
 
         user = authenticate(username=username, password=password)
 
-        if user is  None:
+        if user is None:
             raise forms.ValidationError("Username or password does not exist")
 
     def get_user(self):
@@ -90,5 +91,3 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password', '')
         user = authenticate(username=username, password=password)
         return user
-
-
