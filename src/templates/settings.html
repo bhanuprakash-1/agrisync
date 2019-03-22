@@ -3,6 +3,7 @@
 {% block content %}
     <form action="{% url 'settings:settings_change_done' %}" method="post">
         {% csrf_token %}
+        <input type="hidden" name="hash" value="{{ hash }}">
         <table>
             {% for key, value in fields.items %}
                 <tr>
@@ -13,5 +14,5 @@
         </table>
         <input type="submit" value="Submit">
     </form>
-    <a href="{% url 'settings:settings_reset' %}">Reset</a>
+    <a href="{% url 'settings:settings_reset' %}?hash={{ hash }}">Reset</a>
 {% endblock %}

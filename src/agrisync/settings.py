@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'versatileimagefield',
     'oauth.apps.OauthConfig',
+    'forum.apps.ForumConfig',
     'main.apps.MainConfig',
-
 ]
 
 MIDDLEWARE = [
@@ -83,14 +83,14 @@ WSGI_APPLICATION = 'agrisync.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if config('SQLITE_DB', cast=bool, default=False):
+if config('SQLITE_DB', cast=bool, default=False):  # pragma: no cover
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
         }
     }
-else:
+else:  # pragma: no cover
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -144,7 +144,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfil
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
+MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../../media', cast=str))
 
 MEDIA_URL = '/media/'
 

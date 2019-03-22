@@ -1,1 +1,28 @@
-<h1>This is 500 server error we have encoured an server error</h1>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Internal Server Error !{% endblock %}
+{% block customstyles %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+        .main-container {
+            height: 100vh;
+            padding-top: 5rem;
+            display: table;
+        }
+
+        .main-content {
+            height: 100%;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+{% block fullpagecontent %}
+    <div class="container-fluid main-container">
+        <div class="container main-content">
+            <img src="{% static 'assets/server-error.jpg' %}" alt="Server Logo" style="height: 45vmin "/>
+            <h2 class="h2-responsive" style="font-family: 'Montserrat', sans-serif;">Internal server error !</h2>
+        </div>
+    </div>
+{% endblock %}
