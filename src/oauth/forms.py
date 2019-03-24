@@ -92,3 +92,39 @@ class LoginForm(forms.Form):
         return user
 
 
+# This form is  not used anywhere required
+
+class Password_ChangeForm(forms.Form):
+    old_password = forms.CharField(label="Old password",
+                                   widget=forms.PasswordInput)
+    new_password1 = forms.CharField(label='Password',
+                                strip=False,
+                                widget=forms.PasswordInput(),
+                                help_text=password_validation.password_validators_help_text_html(),
+                                )
+    new_password2 = forms.CharField(label='Password confirmation',
+                                strip=False,
+                                widget=forms.PasswordInput(),
+                                help_text='Enter the same password as before, for verification.',
+                                )
+
+
+    def clean_old_password(self):
+
+        old_password = self.cleaned_data["old_password"]
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError(""" Enter correct old password """)
+        return old_password
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(""" New Passwords didn't match """)
+        return password2
+
+
+
+
+
