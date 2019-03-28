@@ -1,8 +1,10 @@
 from django.conf.urls import url
-from .views import HomeView
+from oauth.views import home, FarmerRegisterView, ExpertRegisterView
 
 app_name = 'oauth'
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name='index')
+    url(r'^$', home, name='home'),
+    url(r'^Farmer_Signup/$', FarmerRegisterView, name='Farmer_Signup'),
+    url(r'^Expert_Signup/$', ExpertRegisterView, name='Expert_Signup'),
 ]

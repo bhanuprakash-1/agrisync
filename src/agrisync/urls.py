@@ -29,7 +29,7 @@ admin.site.site_header = settings.SITE_HEADER
 favicon_view = RedirectView.as_view(url='/static/favicon.ico', permanent=True)
 
 urlpatterns = [
-    url(r'^login/$', LoginView.as_view(template_name='forum/login.html',
+    url(r'^login/$', LoginView.as_view(template_name='oauth/login.html',
                                        redirect_authenticated_user=True), name='login'),
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^favicon.ico$', favicon_view),

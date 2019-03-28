@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
+{%  if request.user.is_authenticated  %}
+    {{  request.user.full_name }}
+   <p> is authenticated !!!!!</p>
+   <a href="/oauth/Logout"><h4>Click here to logout</h4></a>
+
+{% else   %}
+    <p> you are not authenticated </p>
+    <a href="/oauth/Login/"><h3>Click here to login , if you  are already registered </h3></a> <br>
+    <h4> If not registered </h4>
+    <a  href="/oauth/Farmer_Signup/"> For farmer signup click</a> <br>
+    <a href ="/oauth/Expert_Signup/"> For Expert signup click</a>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
