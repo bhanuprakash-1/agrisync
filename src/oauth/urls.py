@@ -1,12 +1,10 @@
-from django.urls import path
-from . import views
+from django.conf.urls import url
+from oauth.views import home, FarmerRegisterView, ExpertRegisterView
 
 app_name = 'oauth'
 
 urlpatterns = [
-    path('home/', views.home, name='home'),
-    path('Farmer_Signup/', views.FarmerRegisterView, name='Farmer_Signup'),
-    path('Expert_Signup/', views.ExpertRegisterView, name='Expert_Signup'),
-    path('Login/', views.LoginView, name='Login'),
-    path('Logout/', views.LogoutView, name='Logout'),
+    url(r'^$', home, name='home'),
+    url(r'^Farmer_Signup/$', FarmerRegisterView, name='Farmer_Signup'),
+    url(r'^Expert_Signup/$', ExpertRegisterView, name='Expert_Signup'),
 ]

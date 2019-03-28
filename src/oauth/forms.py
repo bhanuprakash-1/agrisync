@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import password_validation
-from .models import Farmer
-from django.contrib.auth import authenticate
+from oauth.models import Farmer
 
 
 class FarmerRegisterForm(UserCreationForm):
@@ -66,28 +65,3 @@ class ExpertRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=30, help_text="Enter your registered username", label='Username')
-    password = forms.CharField(label='Password',
-                               strip=False,
-                               widget=forms.PasswordInput(),
-                               help_text=password_validation.password_validators_help_text_html(),
-                               )
-
-    def clean(self):
-        super(LoginForm, self).clean()
-        username = self.cleaned_data.get('username', '')
-        password = self.cleaned_data.get('password', '')
-
-        user = authenticate(username=username, password=password)
-
-        if user is None:
-            raise forms.ValidationError("Username or password does not exist")
-
-    def get_user(self):
-        username = self.cleaned_data.get('username', '')
-        password = self.cleaned_data.get('password', '')
-        user = authenticate(username=username, password=password)
-        return user
