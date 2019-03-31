@@ -1,10 +1,5 @@
 from django.contrib import admin
-from oauth.models import Farmer
+from .models import Farmer, Expert
 
-
-class FarmerAdmin(admin.ModelAdmin):
-    model = Farmer
-    list_display = ('__str__', )
-
-
-admin.site.register(Farmer, FarmerAdmin)
+admin.site.register(Expert)
+admin.site.register(Farmer)

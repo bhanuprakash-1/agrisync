@@ -1,8 +1,17 @@
 from django.conf.urls import url
-from .views import HomeView
+from django.urls import path
 
-app_name = 'account'
+from . import views
+
+app_name = 'oauth'
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name='index')
+
+    path('home/', views.home, name='home'),
+    path('Farmer_Signup/',views.FarmerRegisterView, name='Farmer_Signup'),
+    path('Expert_Signup/',views.ExpertRegisterView, name='Expert_Signup'),
+
+    path('Login/',views.LoginView,name='Login'),
+    path('Logout/',views.LogoutView,name='Logout'),
+    path('change_password/', views.change_password , name='change_password')
 ]
