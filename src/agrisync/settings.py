@@ -26,7 +26,12 @@ SECRET_KEY = config('SECRET_KEY', cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
+# Maintenance settings
 MAINTENANCE_MODE = config('MAINTENANCE_MODE', default=False, cast=bool)
+MAINTENANCE_MODE_APP = ('main', 'forum', 'oauth')
+MAIN_APP_MAINTENANCE = config('MAIN_APP_MAINTENANCE', default=False, cast=bool)
+OAUTH_APP_MAINTENANCE = config('OAUTH_APP_MAINTENANCE', default=False, cast=bool)
+FORUM_APP_MAINTENANCE = config('FORUM_APP_MAINTENANCE', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
@@ -39,10 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'versatileimagefield',
     'oauth.apps.OauthConfig',
-    #'ckeditor',
     'forum.apps.ForumConfig',
-
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'agrisync.middleware.MaintenanceMiddleware',
 ]
 
 ROOT_URLCONF = 'agrisync.urls'
@@ -78,14 +84,14 @@ WSGI_APPLICATION = 'agrisync.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if config('SQLITE_DB', cast=bool, default=False):
+if config('SQLITE_DB', cast=bool, default=False):  # pragma: no cover
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(BASE_DIR, '../db.sqlite3'),
         }
     }
-else:
+else:  # pragma: no cover
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -174,7 +180,6 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -187,7 +192,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, config('STATIC_PATH', default='../staticfil
 
 STATIC_URL = "/var/www/example.com/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../media', cast=str))
+MEDIA_ROOT = os.path.join(BASE_DIR, config('MEDIA_PATH', default='../../media', cast=str))
 
 MEDIA_URL = '/media/'
 

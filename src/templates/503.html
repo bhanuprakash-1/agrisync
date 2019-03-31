@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% block title %}Page not found !{% endblock %}
+{% block title %}Under Maintenance !{% endblock %}
 {% block customstyles %}
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <style>
@@ -11,7 +11,6 @@
         }
 
         .main-content {
-            height: 100%;
             display: table-cell;
             text-align: center;
             vertical-align: middle;
@@ -20,13 +19,9 @@
 {% endblock %}
 {% block fullpagecontent %}
     <div class="container main-container">
-        <div class="main-content pb-5">
-            <img src="{% static 'assets/404.jpeg' %}" alt="404 Logo"/>
-            <h3 class="h3-responsive" style="font-family: 'Montserrat', sans-serif;">
-                The link you followed may be broken, or the page may have been removed.
-            </h3>
-            <a class="btn btn-primary" href="{% url 'main:index' %}">Home</a>
-            <a class="btn btn-primary" href="{% url 'forum:index' %}">Forum</a>
+        <div class="main-content">
+            <img src="{% static 'assets/settings-gear.png' %}" alt="Settings Gear Icon">
+            <h1 class="h1-responsive" style="font-family: 'Montserrat', sans-serif;">{{ message }}</h1>
         </div>
     </div>
 {% endblock %}

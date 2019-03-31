@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+</head>
+<body>
+
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+
+
+<form method="POST">
+   {%  csrf_token %}
+
+
+      <h> Login Here </h>
+
+      {{ form.as_p }}
+
+    <input type="submit" value="login">
+
+</form>
+
+ <h3> If not registered </h3>
+
+    <a  href="/Farmer_Signup/" ><h4>For farmer registration ,click here</h4></a> <br>
+    <a  href="/Expert_Signup/" ><h4>For Expert registration ,click here</h4></a>
+
+
+
+</body>
+</html>

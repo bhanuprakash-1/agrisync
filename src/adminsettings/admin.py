@@ -1,8 +1,6 @@
 from django.contrib.admin import AdminSite
 from django.urls import path
 from django.views.decorators.cache import never_cache
-from functools import update_wrapper
-from .views import SettingsChangeView, SettingsChangeDoneView, SettingsResetView
 
 
 class AdminSettings(AdminSite):
@@ -16,6 +14,8 @@ class AdminSettings(AdminSite):
         Override get_urls function
         """
         def wrap(view, cacheable=False):
+            from functools import update_wrapper
+
             def wrapper(*args, **kwargs):
                 return self.admin_view(view, cacheable)(*args, **kwargs)
             wrapper.admin_site = self
@@ -37,6 +37,7 @@ class AdminSettings(AdminSite):
 
     @never_cache
     def settings_change(self, request):
+        from .views import SettingsChangeView
         """
         Display the main settings page, which lists all settings which can be changed fro admin panel
         """
@@ -44,6 +45,7 @@ class AdminSettings(AdminSite):
 
     @never_cache
     def settings_change_done(self, request):
+        from .views import SettingsChangeDoneView
         """
         Change settings and display settings_page
         """
@@ -51,6 +53,7 @@ class AdminSettings(AdminSite):
 
     @never_cache
     def settings_reset(self, request):
+        from .views import SettingsResetView
         """
         Reset Settings and display same page
         """

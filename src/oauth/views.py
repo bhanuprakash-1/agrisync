@@ -1,31 +1,33 @@
 from django.shortcuts import render, redirect
-from .forms import FarmerRegisterForm,ExpertRegistrationForm,LoginForm
+from .forms import FarmerRegisterForm, ExpertRegistrationForm
 from .models import Farmer, Expert
-from django.contrib.auth import authenticate , login , logout , update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+
 
 def home(request):
-    return render(request,'oauth/home_oauth.html',)
+    return render(request, 'oauth/home_oauth.html', )
+
+
+def home(request, MAINTENANCE):
+    return render(request, 'oauth/home_oauth.html', )
+
 
 def createFarmerprofile(user=None, **kwargs):
-    userprofile= Farmer.objects.create(user=user,
-                                       full_name=kwargs['full_name'],
-                                       phone=kwargs['phone'],
-                                       dob=kwargs['dob'],
-                                       aadhar=kwargs['aadhar'],
-                                       img_file=kwargs['img_file'],
-                                       land_area=kwargs['land_area'],
-                                       state=kwargs['state'],
-                                       district=kwargs['district'],
-                                       income=kwargs['income'],
-                                       major_crop=kwargs['major_crop'],
+    userprofile = Farmer.objects.create(user=user,
+                                        full_name=kwargs['full_name'],
+                                        phone=kwargs['phone'],
+                                        dob=kwargs['dob'],
+                                        aadhar=kwargs['aadhar'],
+                                        img_file=kwargs['img_file'],
+                                        land_area=kwargs['land_area'],
+                                        state=kwargs['state'],
+                                        district=kwargs['district'],
+                                        income=kwargs['income'],
+                                        major_crop=kwargs['major_crop'],
 
-
-                                      )
+                                        )
 
     userprofile.save()
+
 
 def FarmerRegisterView(request):
     if request.method == 'POST':
@@ -34,14 +36,12 @@ def FarmerRegisterView(request):
         if form.is_valid():
             user = form.save()
             createFarmerprofile(user, **form.cleaned_data)
-            messages.info(request, 'You are registered Successfully , please login again')
             return redirect('/oauth/home/')
 
     else:
         form = FarmerRegisterForm()
 
-    return render(request, 'oauth/Farmer_Signup.html',{'form': form})
-
+    return render(request, 'oauth/Farmer_Signup.html', {'form': form})
 
 
 def createExpertprofile(user=None, **kwargs):
@@ -63,55 +63,10 @@ def ExpertRegisterView(request):
         form = ExpertRegistrationForm(request.POST)
 
         if form.is_valid():
-            user=form.save()
+            user = form.save()
             createExpertprofile(user, **form.cleaned_data)
-            messages.info(request, 'You are registered Successfully , please login again')
             return redirect('/oauth/home/')
 
     else:
         form = ExpertRegistrationForm()
-    return render(request,'oauth/Expert_Signup.html',{'form': form})
-
-
-
-def LoginView(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-
-        if form.is_valid():
-            user = form.get_user()
-            login(request,user)
-            messages.info(request, 'You are logged in  successfully')
-            return redirect('/oauth/home/')
-
-
-    else:
-        form = LoginForm()
-
-    return render(request,'oauth/Login.html',{'form':form})
-
-
-@login_required(login_url='/oauth/home/')
-def LogoutView(request):
-    logout(request)
-    messages.info(request,'You are logged out successfully')
-    return redirect('/oauth/home/')
-
-
-
- #   create a new form for better interaction ....  """
-
-@login_required(login_url='/oauth/home/')
-def change_password(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(user=request.user,data=request.POST)
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(request,form.user)
-            messages.success(request,'Your Password was successfully updated')
-            return redirect('/oauth/home')
-        else:
-            messages.error(request, 'Please correct the below error')
-    else:
-        form= PasswordChangeForm(request.user)
-    return render(request, 'oauth/password_change.html', {'form': form})
+    return render(request, 'oauth/Expert_Signup.html', {'form': form})

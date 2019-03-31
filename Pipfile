@@ -6,12 +6,10 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django = "==2.1.5"
+django = ">=2.1.6"
 django-decouple = "==2.1"
 flake8 = "*"
 psycopg2 = "*"
-django-ckeditor = "==5.6.1"
-
-
+django-versatileimagefield = "==1.10"
 [requires]
 python_version = "3.6"
