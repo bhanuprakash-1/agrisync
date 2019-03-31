@@ -2,6 +2,9 @@ from django.db import models
 from oauth.models import User
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.db.models import Q
+from django.urls import reverse
+
+
 
 
 class TopicQuery(models.query.QuerySet):
@@ -29,6 +32,7 @@ class TopicManager(models.Manager):
 
 
 
+
 class Topic(models.Model):
     CAT_CHOICES =(
         ('Q','Question'),
@@ -36,6 +40,7 @@ class Topic(models.Model):
         ('S','Suggestion'),
     )
     author=models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="author of topic")
+    category=models.CharField(max_length=3, choices=CAT_CHOICES, default='Q')
     title=models.CharField(max_length=256)
     tags=models.CharField(max_length=60,blank=True,null=True,default=None)
     content=RichTextUploadingField()
@@ -45,6 +50,18 @@ class Topic(models.Model):
 
     def number_of_answers(self):
         return  self.answer_set.count()
+
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def get_absolute_url(self):
+        return reverse('forum:detail', kwargs={'slug': self.slug})
+
+    def tags_as_list(self):
+        if self.tags == '' or not self.tags:
+            return ''
+        return sorted(self.tags.split(','))
 
 
     def __str__(self):
