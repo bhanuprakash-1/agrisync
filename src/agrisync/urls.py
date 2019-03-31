@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^account/', include('oauth.urls', namespace='account')),
     url(r'^forum/', include('forum.urls', namespace='forum')),
     url(r'^', include('main.urls', namespace='main')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:
