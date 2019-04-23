@@ -44,9 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'versatileimagefield',
-    'oauth.apps.OauthConfig',
+    'django_countries',
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
+    'oauth.apps.OauthConfig',
+    'account.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
