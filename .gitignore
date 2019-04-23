@@ -110,7 +110,6 @@ migrations/
 
 # Project asset folders
 staticfiles/
-static/
 media/
 
 # Database
