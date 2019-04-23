@@ -3,10 +3,6 @@ from .forms import FarmerRegisterForm, ExpertRegistrationForm
 from .models import Farmer, Expert
 
 
-def home(request):
-    return render(request, 'oauth/home_oauth.html', )
-
-
 def home(request, MAINTENANCE):
     return render(request, 'oauth/home_oauth.html', )
 
