@@ -163,4 +163,5 @@ DEFAULT_JSON_SETTINGS_FILE = os.path.join(BASE_DIR, '../default_settings.json')
 
 # login redirect url
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'forum:index'
+LOGIN_URL = 'login'

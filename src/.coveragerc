@@ -3,7 +3,10 @@ source =
     .
 omit =
     */migrations/*
+    */oauth/*
+    */main/*
 
 [report]
 exclude_lines=
     pragma: no cover
+    pragma: never happen

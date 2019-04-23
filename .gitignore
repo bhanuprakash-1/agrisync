@@ -133,3 +133,6 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# Pipfile's
+Pipfile.lock
