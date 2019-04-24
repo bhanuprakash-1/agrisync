@@ -22,7 +22,7 @@ class AnswerForm(forms.ModelForm):
 
     def clean_content(self):
         content = strip_tags(self.data['content']).split('&nbsp;')
-        content = [x for x in content if x is not '']
+        content = [x for x in content if x != '']
         content = [x for x in content if x != '\r\n']
         if len(content) == 0:
             raise forms.ValidationError("This can't be entire whitespace")

@@ -161,4 +161,3 @@ class ForumURLWithPermissionTestCase(TestCase):
         self.answer_1 = Answer.objects.create(topic=self.topic_1, author=self.user_1)
         self.client.post(reverse('forum:delete_answer', kwargs={'pk': self.answer_1.pk}))
         self.assertFalse(Answer.objects.filter(topic=self.topic_1).exists())
-
