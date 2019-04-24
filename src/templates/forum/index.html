@@ -1,26 +1,5 @@
-<title>Forum</title>
 
-<h1>Agrisync Forum</h1>
 
-<a href="{% url 'forum:add_topic' %}">
-create new topic
-</a>
-
-<title>Forum</title>
-
-<h1>Agrisync Forum</h1>
-
-<a href="{% url 'forum:add_topic' %}">
-create new topic
-</a>
-
-<form method="GET" action="">
-    <input type="search" role="search" name="q" class="form-control" value="{{request.GET.q}}" id="id_q" placeholder="Search forum...">
-    <span class=""><button type="submit">
-    </button>
-    </span>
-
-</form>
 
 <title>Forum</title>
 
@@ -46,7 +25,7 @@ create new topic
                     {% include 'forum/mixins/topic_list_mixin.html' with topic_list=topic_list %}
                 </ul>
                 <div>
-                    {% include 'paginator.html' with is_paginated=is_paginated range=range page_obj=page_obj paginator=paginator %}
+                    {% include 'admin/pagination.html' with is_paginated=is_paginated range=range page_obj=page_obj paginator=paginator %}
                 </div>
             </div>
         </div>

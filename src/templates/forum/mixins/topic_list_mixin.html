@@ -20,7 +20,7 @@
             {% if topic.answer_set.first %}
             <li class="item-terminalPost"><span><i
                     class="icon fa fa-fw fa-reply "></i> <span
-                    class="username">{{ topic.answer_set.first.author.user.get_full_name }}</span> replied {{ topic.answer_set.first.created_at|naturaltime }}</span>
+                    class="username">{{ topic.answer_set.first.author.user.get_full_name }}</span> replied {{ topic.answer_set.first.created_at }}</span>
             </li>
             <li class="item-excerpt">
                 <span>{{ topic.answer_set.first.content|safe|truncatechars_html:150 }}</span>
