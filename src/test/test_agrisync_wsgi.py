@@ -9,6 +9,7 @@ class WSGITestCase(LiveServerTestCase):
         self.request = RequestFactory()
 
     def test_wsgi_server(self):
+        """test wsgi request generation"""
         request = self.request.get(reverse('main:index'))
         response = application.get_response(request)
         self.assertEqual(response.status_code, 200)

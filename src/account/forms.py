@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django_countries.fields import CountryField
 from account.models import FarmerAccount, ExpertAccount
@@ -21,11 +22,9 @@ class UserForm(UserCreationForm):
         widget=forms.TextInput(attrs={'class': 'text', 'type': 'text', 'name': 'Username', 'placeholder': 'Username'}),
         label='')
 
-    def clean_account_type(self):
-        for key, value in self.ACCOUNT_TYPE:
-            if self.data.get('account_type') == key:
-                return self.cleaned_data['account_type']
-        raise forms.ValidationError("Choose from only available option")
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username']
 
 
 class UserProfileForm(forms.ModelForm):
@@ -48,14 +47,6 @@ class FarmerForm(UserProfileForm):
         model = FarmerAccount
         fields = ['profile', 'cover', 'land_area', 'state', 'district', 'major_crop']
 
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(FarmerForm, self).__init__(*args, **kwargs)
-
-    def save(self, commit=True):
-        self.instance.user_id = self.request.user.id
-        return super(FarmerForm, self).save(commit)
-
 
 class ExpertForm(UserProfileForm):
     skills = forms.CharField(widget=forms.Textarea)
@@ -63,11 +54,3 @@ class ExpertForm(UserProfileForm):
     class Meta:
         model = ExpertAccount
         fields = ['profile', 'cover', 'state', 'district', 'skills']
-
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(ExpertForm, self).__init__(*args, **kwargs)
-
-    def save(self, commit=True):
-        self.instance.user_id = self.request.user.id
-        return super(ExpertForm, self).save(commit)

@@ -1,6 +1,6 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.views import LoginView as DefaultLoginView
@@ -8,7 +8,7 @@ from account.forms import FarmerForm, UserForm, ExpertForm
 from account.models import FarmerAccount, ExpertAccount
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'account/profile.html'
     user = None
 
@@ -29,11 +29,11 @@ class LoginView(DefaultLoginView):
     def get_success_url(self):
         url = super().get_redirect_url()
         if self.request.user.is_staff:
-            return url or '/admin'
-        elif not hasattr(self.request.user, 'farmeraccount') or hasattr(self.request.user, 'expertaccount'):
+            return url or reverse('admin:index')
+        elif hasattr(self.request.user, 'farmeraccount') or hasattr(self.request.user, 'expertaccount'):
             return reverse('forum:index')
         else:
-            return '/'
+            return reverse('account:farmer-register')
 
 
 class RegisterView(CreateView):
@@ -53,31 +53,16 @@ class RegisterView(CreateView):
         elif self.chosen_type == 'EA':
             login(self.request, self.object)
             return reverse('account:expert-register')
-        else:
+        else:  # pragma: never happen
             return super().get_success_url()
 
 
-class AbstractCreateView(CreateView):
+class AbstractCreateView(LoginRequiredMixin, CreateView):
     request = None
 
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            self.request = request
-            return super(AbstractCreateView, self).get(request, *args, **kwargs)
-        else:
-            return redirect(reverse('account:register'))
-
-    def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            self.request = request
-            return super(AbstractCreateView, self).post(request, *args, **kwargs)
-        else:
-            return redirect(reverse('account:register'))
-
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs['request'] = self.request
-        return kwargs
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(AbstractCreateView, self).form_valid(form)
 
 
 class FarmerRegisterView(AbstractCreateView):
