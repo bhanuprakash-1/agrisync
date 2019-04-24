@@ -12,6 +12,5 @@ flake8 = "*"
 psycopg2 = "*"
 django-versatileimagefield = "==1.10"
 django-countries = "*"
-
 [requires]
 python_version = "3.6"
