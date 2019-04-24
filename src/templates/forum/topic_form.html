@@ -1,8 +1,21 @@
-{% block title %}Add New Topic {% endblock %}
+{% extends 'forum/base.html' %}
+{% load staticfiles %}
+{% block title %}Add New Topic | {{ block.super }}{% endblock %}
+{% block mdbcss %}
+    <link rel="stylesheet" href="{% static 'css/mdbadmin.min.css' %}">{% endblock %}
+{% block main %}
+    <div class="row">
+        <!--Form without header-->
+        <div class="card">
+            <div class="card-block">
 
-<h3><i class="fa fa-pencil"></i> {% block formtitle %}Post New Topic:{% endblock %}</h3>
+                <!--Header-->
+                <div>
+                    <h3><i class="fa fa-pencil"></i> {% block formtitle %}Post New Topic:{% endblock %}</h3>
+                    <hr class="mt-2 mb-2">
+                </div>
 
-
+                <!--Body-->
                 <form action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for field in form %}
@@ -37,6 +50,7 @@
         </div>
         <!--/Form without header-->
     </div>
+{% endblock %}
 
 {% block customscripts %}
     {{ form.media }}

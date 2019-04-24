@@ -44,8 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'versatileimagefield',
     'django_countries',
+    'ckeditor',
+    'ckeditor_uploader',
     'forum.apps.ForumConfig',
     'main.apps.MainConfig',
     'oauth.apps.OauthConfig',
@@ -137,7 +140,7 @@ USE_L10N = True
 USE_TZ = True
 
 # CKEditor
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_UPLOAD_PATH = "ckeditor/"
 CKEDITOR_RESTRICT_BY_USER = True
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_CONFIGS = {

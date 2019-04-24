@@ -1,0 +1,43 @@
+{% load staticfiles humanize %}
+{% for answer in answer_list %}
+    <div class="PostStream-item">
+        <article class="Post undefined CommentPost">
+            <div>
+                <div class="Post-header">
+                    <ul>
+                        <li class="item-user">
+                            <div class="PostUser"><h3><img
+                                    class="Avatar PostUser-avatar"
+                                    src="{% if answer.author.farmeraccount.profile %}{{ answer.author.farmeraccount.profile.crop.200x200 }}{% elif answer.author.expertaccount.profile %}{{ answer.author.expertaccount.profile.crop.200x200 }}{% else %}{% static 'assets/others/missing.png' %}{% endif %}"></h3>
+                                <ul class="PostUser-badges badges"></ul>
+                            </div>
+                        </li>
+                        <li class="item-meta">
+                            <div class="Dropdown PostMeta">{{ answer.created_at|naturaltime }}
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="description"
+                     class="Post-body">{{ answer.content|safe }}</div>
+                <aside class="Post-actions">
+                    <ul>
+                        {% if answer.author == request.user %}
+                            <li class="item-reply">
+                                <form action="{{ answer.get_delete_url }}" method="post"
+                                        onsubmit="return confirm('Are you sure you want to delete this answer?')">
+                                    {% csrf_token %}
+                                    <button class="Button Button--link" type="submit" data-toggle="tooltip"
+                                            data-placement="left" title="Delete">
+                                        <span class="Button-label"><i class="fa fa-trash-o"></i></span>
+                                    </button>
+                                </form>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </aside>
+            </div>
+        </article>
+        <div class="Post-quoteButtonContainer"></div>
+    </div>
+{% endfor %}

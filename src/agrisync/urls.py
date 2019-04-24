@@ -28,6 +28,7 @@ admin.site.site_title = settings.SITE_TITLE
 admin.site.site_header = settings.SITE_HEADER
 
 urlpatterns = [
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^admin/', admin.site.urls),

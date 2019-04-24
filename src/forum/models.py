@@ -1,12 +1,13 @@
-from oauth.models import User
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
-from .utils import unique_slug_generator
+from forum.utils import unique_slug_generator
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
 
 
-class TopicQuery(models.query.QuerySet):
+class TopicQueryset(models.query.QuerySet):
     def search(self, query):
         if query:
             return self.filter(
@@ -17,31 +18,35 @@ class TopicQuery(models.query.QuerySet):
                 Q(tags__icontains=query) |
                 Q(answer__content__icontains=query)
             ).distinct()
-        else:
+        else:  # pragma: never happen
             return self.none()
 
 
 class TopicManager(models.Manager):
     def get_topic_queryset(self):
-        return TopicQuery(self.model, using=self._db)
+        return TopicQueryset(self.model, using=self._db)
 
     def search(self, query):
         return self.get_topic_queryset().search(query)
 
 
 class Topic(models.Model):
+    # Choices
     CAT_CHOICES = (
         ('Q', 'Question'),
-        ('I', 'Improvement'),
+        ('F', 'Feedback'),
         ('S', 'Suggestion'),
+        ('I', 'Improvement'),
     )
+    # Topic Database Model
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="author of topic")
     category = models.CharField(max_length=3, choices=CAT_CHOICES, default='Q')
     title = models.CharField(max_length=256)
-    tags = models.CharField(max_length=60, blank=True, null=True, default=None)
-    content = models.TextField()
+    content = RichTextUploadingField()
+    tags = models.CharField(max_length=50, blank=True, null=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True, blank=True)
+
     objects = TopicManager()
 
     @property
@@ -52,7 +57,13 @@ class Topic(models.Model):
         ordering = ["-created_at"]
 
     def get_absolute_url(self):
-        return reverse('forum:topic_detail', kwargs={'slug': self.slug})
+        return reverse('forum:detail', kwargs={'slug': self.slug})
+
+    def get_edit_url(self):
+        return reverse('forum:update_topic', kwargs={'slug': self.slug})
+
+    def get_delete_url(self):
+        return reverse('forum:delete_topic', kwargs={'slug': self.slug})
 
     def tags_as_list(self):
         if self.tags == '' or not self.tags:
@@ -73,9 +84,8 @@ pre_save.connect(topic_pre_save_receiver, sender=Topic)
 
 class Answer(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, verbose_name="topic of answer")
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="author of the answer")
-    # content = RichTextUploadingField(blank=True)
-    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="author of answer")
+    content = RichTextUploadingField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -83,6 +93,9 @@ class Answer(models.Model):
 
     def get_absolute_url(self):
         return self.topic.get_absolute_url()
+
+    def get_delete_url(self):
+        return reverse('forum:delete_answer', kwargs={'pk': self.pk})
 
     def __str__(self):
         return "On: " + str(self.topic.title) + " by " + str(self.author.first_name) + " " + str(

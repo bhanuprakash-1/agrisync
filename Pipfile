@@ -12,5 +12,7 @@ flake8 = "*"
 psycopg2 = "*"
 django-versatileimagefield = "==1.10"
 django-countries = "*"
+django-ckeditor = "*"
+
 [requires]
 python_version = "3.6"
