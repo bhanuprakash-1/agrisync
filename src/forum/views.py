@@ -23,6 +23,15 @@ class IndexView(LoginRequiredMixin, ListView):
             return Topic.objects.all()
 
 
+class TopicCreateView(LoginRequiredMixin, CreateView):
+    form_class = TopicForm
+    template_name = 'forum/topic_forum.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super(TopicCreateView, self).form_valid(form)
+
+
 class TopicDetailView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
@@ -55,12 +64,3 @@ class TopicAnswer(LoginRequiredMixin, SingleObjectMixin, FormView):
         context = super(TopicAnswer, self).get_context_data(**kwargs)
         context['answer_list'] = self.object.answer_set.all()
         return context
-
-
-class TopicCreateView(LoginRequiredMixin, CreateView):
-    form_class = TopicForm
-    template_name = 'forum/topic_forum.html'
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super(TopicCreateView, self).form_valid(form)

@@ -52,7 +52,7 @@ class Topic(models.Model):
         ordering = ["-created_at"]
 
     def get_absolute_url(self):
-        return reverse('forum:detail', kwargs={'slug': self.slug})
+        return reverse('forum:topic_detail', kwargs={'slug': self.slug})
 
     def tags_as_list(self):
         if self.tags == '' or not self.tags:
@@ -63,9 +63,9 @@ class Topic(models.Model):
         return self.title
 
 
-def topic_pre_save_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = unique_slug_generator(instance)
+def topic_pre_save_receiver(**kwargs):
+    if not kwargs['instance'].slug:
+        kwargs['instance'].slug = unique_slug_generator(kwargs['instance'])
 
 
 pre_save.connect(topic_pre_save_receiver, sender=Topic)
