@@ -1,20 +1,21 @@
 from django import forms
 from .models import Topic, Answer
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.utils.html import strip_tags
 
+
 class TopicForm(forms.ModelForm):
-    title=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    title = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     content = forms.CharField(widget=forms.TextInput())
 
     class Meta:
-        model=Topic
-        fields=['category','title','tags','content']
+        model = Topic
+        fields = ['category', 'title', 'tags', 'content']
 
 
 class AnswerForm(forms.ModelForm):
     # content = forms.CharField(widget=CKEditorUploadingWidget())
-    content=forms.CharField(widget=forms.TextInput())
+    content = forms.CharField(widget=forms.TextInput())
+
     class Meta:
         model = Answer
         fields = ('topic', 'author', 'content')

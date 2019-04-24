@@ -1,8 +1,9 @@
-from django.views.generic import ListView, CreateView,View,DetailView,FormView
+from django.views.generic import ListView, CreateView, View, DetailView, FormView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Topic, Answer
-from .forms import TopicForm,AnswerForm
+from .models import Topic
+from .forms import TopicForm, AnswerForm
 from django.views.generic.detail import SingleObjectMixin
+
 
 class IndexView(LoginRequiredMixin, ListView):
     template_name = 'forum/index.html'
@@ -32,6 +33,7 @@ class TopicDetailView(LoginRequiredMixin, View):
         view = TopicAnswer.as_view()
         return view(request, *args, **kwargs)
 
+
 class TopicDisplay(DetailView):
     model = Topic
     context_object_name = 'topic'
@@ -55,11 +57,6 @@ class TopicAnswer(LoginRequiredMixin, SingleObjectMixin, FormView):
         return context
 
 
-
-
-
-
-
 class TopicCreateView(LoginRequiredMixin, CreateView):
     form_class = TopicForm
     template_name = 'forum/topic_forum.html'
@@ -67,6 +64,3 @@ class TopicCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super(TopicCreateView, self).form_valid(form)
-
-
-

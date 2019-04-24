@@ -3,8 +3,8 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save
 from .utils import unique_slug_generator
-from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse
+
 
 class TopicQuery(models.query.QuerySet):
     def search(self, query):
@@ -62,6 +62,7 @@ class Topic(models.Model):
     def __str__(self):
         return self.title
 
+
 def topic_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
@@ -77,13 +78,11 @@ class Answer(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-
     class Meta:
         ordering = ['-created_at']
 
     def get_absolute_url(self):
         return self.topic.get_absolute_url()
-
 
     def __str__(self):
         return "On: " + str(self.topic.title) + " by " + str(self.author.first_name) + " " + str(
