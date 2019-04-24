@@ -11,7 +11,16 @@ class UserForm(UserCreationForm):
         ('FA', 'Farmer'),
         ('EA', 'Expert')
     )
-    account_type = forms.ChoiceField(widget=forms.Select, choices=ACCOUNT_TYPE)
+    account_type = forms.ChoiceField(widget=forms.Select(attrs={'class': 'text'}), choices=ACCOUNT_TYPE)
+    password1 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'text email', 'type': 'password', 'name': 'password', 'placeholder': 'Password'}), strip=False,
+                                label='')
+    password2 = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'text w3lpass', 'type': 'password', 'name': 'password', 'placeholder': 'Confirm Password'}),
+                                strip=False, label='')
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'text', 'type': 'text', 'name': 'Username', 'placeholder': 'Username'}),
+        label='')
 
     class Meta:
         model = User
