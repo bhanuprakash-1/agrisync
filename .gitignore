@@ -110,7 +110,6 @@ migrations/
 
 # Project asset folders
 staticfiles/
-static/
 media/
 
 # Database
@@ -133,3 +132,6 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# Pipfile's
+Pipfile.lock
