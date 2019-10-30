@@ -83,6 +83,8 @@ celerybeat-schedule
 
 # dotenv
 .env
+settings.json
+default_settings.json
 
 # virtualenv
 .venv
@@ -108,7 +110,6 @@ migrations/
 
 # Project asset folders
 staticfiles/
-static/
 media/
 
 # Database
@@ -131,3 +132,6 @@ selenium-debug.log
 *.ntvs*
 *.njsproj
 *.sln
+
+# Pipfile's
+Pipfile.lock
